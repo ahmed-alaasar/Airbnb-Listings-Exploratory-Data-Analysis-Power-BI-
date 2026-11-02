@@ -103,4 +103,4 @@ The screenshot confirms the visible field names, but does not expose their formu
 
 ## Important interpretation note
 
-In the after-cleaning screenshot, the blank-price and $0-price cards show `--`, but the minimum-price KPI still shows **0.00**. The screenshots alone do not establish whether zero-priced rows were removed, replaced, or excluded only from specific measures. The corresponding DAX definitions and Power Query steps are needed to confirm that behavior.
+In the after-cleaning screenshot, the blank-price and $0-price cards show `--`, but the minimum-price KPI still shows **0.00**. The screenshots alone do not establish whether zero-priced rows were removed, replaced, or excluded only from specific measures. The corresponding DAX definitions and Power Query steps are needed to confirm that behavior. There is also a small reconciliation difference: calculating directly from the raw CSV gives a mean price of **149.47** and median of **86**, while the report screenshots display **149.76** and **87.00**. This should be checked against the report's filters, model data, and measure definitions.
