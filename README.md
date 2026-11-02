@@ -12,7 +12,7 @@ The dataset contains snapshot information about Airbnb listings, including prope
 
 For the complete dataset description and data dictionary, refer to:
 
-`Dataset/dataset_dictionary.md`
+[Dataset Dictionary](Dataset/dataset_dictionary.md)
 
 ## Project Tasks
 
@@ -23,8 +23,6 @@ For the complete dataset description and data dictionary, refer to:
 - Calculate the number of blank-priced listings.
 
 ### 2. Descriptive Analysis
-
-Perform descriptive statistical analysis, organized into separate groups.
 
 **Price Analysis**
 - Mean price.
@@ -45,7 +43,7 @@ Perform descriptive statistical analysis, organized into separate groups.
 - Calculate city-level median prices.
 - Replace blank listing prices using the corresponding city median.
 
-### 4. Power BI Report
+## Power BI Report
 
 The Power BI report presents the analysis before and after cleaning.
 
@@ -62,16 +60,37 @@ The report includes:
 - Average host acceptance rate by city.
 - Neighborhood average price and review score.
 
+[View the Before & After EDA Comparison](ReportShots/EDA_Comparison.md)
+
 ## Repository Structure
 
-| Folder | Description |
-|---|---|
-| Dataset | Dataset description and data dictionary |
-| Missing_Values | Missing values investigation |
-| Descriptive_Analysis | Descriptive statistical analysis |
-| Data_Cleaning | Price imputation |
-| PowerBI_Report | Power BI report file |
-| Screenshots | Before and after cleaning report screenshots |
+```text
+Airbnb-Listings-Exploratory-Data-Analysis-Power-BI-/
+│
+├── README.md
+│
+├── Dataset/
+│   ├── airbnb.csv
+│   └── dataset_dictionary.md
+│
+├── Missing_Values/
+│
+├── Descriptive_Analysis/
+│   ├── Price_Analysis/
+│   └── City_Price_Analysis/
+│
+├── Data_Cleaning/
+│   └── Price_Imputation/
+│
+├── Report/
+│   └── Airbnb EDA.pbix
+│
+└── ReportShots/
+    ├── Before Cleaning.png
+    ├── After Cleaning.png
+    ├── Measures NAd calculated columns.png
+    └── EDA_Comparison.md
+```
 
 ## Tools Used
 
@@ -82,4 +101,3 @@ The report includes:
 ## Project Status
 
 Done
-
