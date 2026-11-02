@@ -1,90 +1,93 @@
-# Airbnb EDA – Power BI
+# Airbnb Listings – Exploratory Data Analysis | Power BI
 
-## Project Overview
+An Exploratory Data Analysis project on **7,210 Airbnb listings** across Sydney, New York, Paris, and Rome. The project investigates missing and zero-priced records, calculates descriptive price statistics, applies city-level median imputation to blank prices, and presents the before/after report views in Power BI.
 
-This project focuses on Exploratory Data Analysis (EDA) of Airbnb listings using Microsoft Power BI.
+## Project at a glance
 
-The project investigates missing values, performs descriptive statistical analysis, and addresses missing listing prices through city-level median imputation.
+| Item | Details |
+|---|---|
+| Dataset | 7,210 rows × 18 columns |
+| Cities | Sydney, New York, Paris, Rome |
+| Main data issue | Missing and zero-valued listing prices |
+| Cleaning approach | City-level median imputation for blank prices |
+| BI tool | Microsoft Power BI |
+| Transformation / modeling | Power Query and DAX |
 
-## Dataset Description
+## Dashboard preview
 
-The dataset contains snapshot information about Airbnb listings, including property characteristics, geographical locations, pricing, and host details.
+### Before cleaning
 
-For the complete dataset description and data dictionary, refer to:
+![Airbnb report before cleaning](ReportShots/Before%20Cleaning.png)
 
-[Dataset Dictionary](Dataset/dataset_dictionary.md)
+The raw-data view shows **7.21K listings**, **14 blank-priced listings**, and **37 listings priced at $0**. The visible price KPIs are average **149.76**, minimum **0.00**, median **87.00**, and maximum **10.57K**.
 
-## Project Tasks
+### After cleaning
 
-### 1. Missing Values Investigation
+![Airbnb report after cleaning](ReportShots/After%20Cleaning.png)
 
-- Investigate missing values in the dataset.
-- Identify columns containing blank values.
-- Calculate the number of blank-priced listings.
+The total listing KPI remains **7.21K**. The blank-price and $0-price cards display `--`. The lower price-distribution visual uses `New_price (bins)`.
 
-### 2. Descriptive Analysis
+[Open the full screenshot comparison and report observations](ReportShots/EDA_Comparison.md).
 
-**Price Analysis**
-- Mean price.
-- Median price.
-- Maximum price.
-- Minimum price.
-- Total listings with a $0 price.
-- Total listings with a blank price.
+## Dataset
 
-**City Price Analysis**
-- Calculate the mean price for each city.
-- Calculate the median price for each city.
-- Create a table containing city-level mean and median prices for missing-price imputation.
+The raw dataset is stored at [`Dataset/airbnb.csv`](Dataset/airbnb.csv). It contains listing identifiers, host information, property details, price, review score, location, booking information, and listing size.
 
-### 3. Data Cleaning – Price Imputation
+The complete column descriptions and data quality notes are in the [Dataset Dictionary](Dataset/dataset_dictionary.md).
 
-- Investigate blank listing prices.
-- Calculate city-level median prices.
-- Replace blank listing prices using the corresponding city median.
+### Initial data quality findings
 
-## Power BI Report
+The counts below were calculated directly from the raw CSV in this repository.
 
-The Power BI report presents the analysis before and after cleaning.
+| Field | Missing / blank | Zero values |
+|---|---:|---:|
+| `price` | 14 | 37 |
+| `host_response_rate` | 3,057 | 344 |
+| `bedrooms` | 797 | 0 |
+| `accommodates` | 0 | 14 |
+| `host_total_listings_count` | 8 | 2,383 |
+| `property_type` | 14 | — |
+| `listing_size_sqft` | 14 | — |
+| `review_scores_rating` | 0 | 6 |
 
-The report includes:
+The city distribution is Sydney **2,110**, New York **2,100**, Paris **1,500**, and Rome **1,500** listings. See [Data Quality Findings](Analysis/Data_Quality_Findings.md) for the complete summary.
 
-- Blank-priced listings.
-- Zero-priced listings.
-- Total listings.
-- Average price.
-- Minimum price.
-- Median price.
-- Maximum price.
-- Listing count by city.
-- Average host acceptance rate by city.
-- Neighborhood average price and review score.
+## Analysis and cleaning workflow
 
-[View the Before & After EDA Comparison](ReportShots/EDA_Comparison.md)
+1. **Missing-value investigation:** identify blank fields and count blank-priced listings.
+2. **Zero-value investigation:** distinguish actual zero values from blanks, particularly for price.
+3. **Descriptive analysis:** calculate mean, median, minimum, maximum, and counts of zero-priced and blank-priced listings.
+4. **City price analysis:** calculate city-level mean and median prices.
+5. **Price imputation:** replace blank prices using the median price of the corresponding city.
+6. **Power BI reporting:** compare the before-cleaning and after-cleaning report views.
 
-## Repository Structure
+The imputation method and its validation note are documented in [Price Cleaning and Imputation](Data_Cleaning/Price_Imputation.md).
+
+## Power BI measures and calculated fields
+
+The model screenshot shows a dedicated `_measures` table with measures for total listings, blank-priced listings, $0 listings, and average host acceptance rate, including after-cleaning variants.
+
+It also shows price-related calculated fields and supporting columns, including `New_price`, `updated_price`, price bins, percentile fields, and IQR boundary fields. See the [Model Inventory](PowerBI_Model/Model_Inventory.md) and the [model screenshot](ReportShots/Measures%20NAd%20calculated%20columns.png).
+
+The screenshot confirms the visible field names, but does not expose their formulas. Exact DAX expressions and Power Query steps should be added only from the actual PBIX definitions.
+
+## Repository structure
 
 ```text
-Airbnb-Listings-Exploratory-Data-Analysis-Power-BI-/
-│
+.
 ├── README.md
-│
 ├── Dataset/
 │   ├── airbnb.csv
 │   └── dataset_dictionary.md
-│
-├── Missing_Values/
-│
-├── Descriptive_Analysis/
-│   ├── Price_Analysis/
-│   └── City_Price_Analysis/
-│
+├── Analysis/
+│   ├── Data_Quality_Findings.md
+│   └── Descriptive_Analysis.md
 ├── Data_Cleaning/
-│   └── Price_Imputation/
-│
+│   └── Price_Imputation.md
+├── PowerBI_Model/
+│   └── Model_Inventory.md
 ├── Report/
 │   └── Airbnb EDA.pbix
-│
 └── ReportShots/
     ├── Before Cleaning.png
     ├── After Cleaning.png
@@ -92,12 +95,12 @@ Airbnb-Listings-Exploratory-Data-Analysis-Power-BI-/
     └── EDA_Comparison.md
 ```
 
-## Tools Used
+## Tools
 
 - Microsoft Power BI
 - Power Query
 - DAX
 
-## Project Status
+## Important interpretation note
 
-Done
+In the after-cleaning screenshot, the blank-price and $0-price cards show `--`, but the minimum-price KPI still shows **0.00**. The screenshots alone do not establish whether zero-priced rows were removed, replaced, or excluded only from specific measures. The corresponding DAX definitions and Power Query steps are needed to confirm that behavior.
