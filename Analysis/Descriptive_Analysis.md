@@ -1,0 +1,1 @@
+Descriptive analysis: mean, median, minimum and maximum listing price; counts of blank-priced and zero-priced listings; city-level mean and median prices. The report also displays listing counts and average host acceptance rate by city, plus neighborhood average price and review score.
